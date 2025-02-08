@@ -1,0 +1,221 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSB Steganography</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+<style>
+
+    /* css start */
+  /* Base Styles */
+body {
+    font: 400 1em/1.5 "Neuton";
+    background: #090d00;
+    color: rgba(255, 255, 255, .25);
+    text-align: center;
+    margin: 0;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+p {
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    display: inline-block;
+    border: 4px double rgba(255, 255, 255, .25);
+    border-width: 4px 0;
+    padding: 1.5em 1em;
+    width: 90%;
+    max-width: 40em;
+    margin: 0 auto;
+    font-size: 1em;
+}
+
+span {
+    font: 700 3em/1 "Oswald", sans-serif;
+    letter-spacing: 0;
+    padding: .25em 0 .325em;
+    display: block;
+    margin: 0 auto;
+    text-shadow: 0 0 80px rgba(255, 255, 255, .5);
+    background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: aitf 80s linear infinite;
+}
+
+.choose {
+    background-color: #d52349;
+    padding: 15px 25px;
+    width: 100%;
+    max-width: 220px;
+    border: none;
+    cursor: pointer;
+    border-radius: 124px;
+    font-size: 18px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.upload-button {
+    color: #fff;
+}
+
+.custom-btn {
+    width: 100%;
+    max-width: 200px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),
+        7px 7px 20px 0px rgba(0,0,0,.1),
+        4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+    margin: 10px auto;
+    text-align: center;
+}
+
+#output {
+    margin-top: 20px;
+    color: aqua;
+    font-size: 24px;
+}
+
+/* Mobile Responsive Design */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 0.9em;
+    }
+
+    p {
+        width: 95%;
+        font-size: 0.9em;
+    }
+
+    span {
+        font-size: 2.5em;
+    }
+
+    .choose {
+        width: 80%;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .custom-btn {
+        width: 80%;
+        font-size: 16px;
+        height: 45px;
+    }
+
+    #output {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    p {
+        font-size: 0.8em;
+        padding: 1em;
+    }
+
+    span {
+        font-size: 2em;
+    }
+
+    .choose {
+        width: 90%;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .custom-btn {
+        width: 90%;
+        font-size: 14px;
+        height: 42px;
+    }
+
+    #output {
+        font-size: 18px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <p class="welcome-message">Welcome to Decoding Platform</p>
+                <p><span>LSB Steganography</span></p>
+
+    <h1>Secret Message Extractor</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <!-- <input type="file" id="fileInput" name="file"><br> -->
+        <!-- <button type="button" onclick="extractMessage()">Extract Message</button> -->
+
+        <div class="choose">
+            <label for="image-upload"  class="upload-button">Choose File</label>
+            <input type="file" id="image-upload" name="image" accept="image/*" required style="display: none;" />
+        </div>
+
+        <div class="button-box">
+            <button type="button" class="custom-btn" id="embed" onclick="extractMessage()">Embed Message</button>
+        </div>
+    </form>
+    <div id="output"></div>
+
+    <script>
+        function extractMessage() {
+            var fileInput = document.getElementById('image-upload');
+            var file = fileInput.files[0];
+
+            if (file) {
+                var formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/extract', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').textContent = data;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please select a file.');
+            }
+        }
+    </script>
+</body>
+</html>
