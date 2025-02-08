@@ -2,3 +2,10 @@
 
 [start]
 cmd = "gunicorn app:app"
+
+[[build.packs]]
+name = "python"
+
+# Add system packages here
+[[build.packages]]
+name = "libgl1"
