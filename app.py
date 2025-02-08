@@ -57,7 +57,3 @@ def extract_message():
     file.save(file.filename)
     message = extract(file.filename)
     return message
-
-
-if __name__ == '__main__':
-    app1.run(debug=True, port = 8080)
