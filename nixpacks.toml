@@ -6,6 +6,8 @@ cmd = "gunicorn app:app"
 [[build.packs]]
 name = "python"
 
-# Add system packages here
-[[build.packages]]
-name = "libgl1"
+[build]
+shell = """
+  apt-get update  # Update package lists
+  apt-get install -y libgl1-mesa  # Install Mesa's libGL (or libgl1 if you prefer)
+"""
