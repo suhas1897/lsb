@@ -1,10 +1,8 @@
-# nixpacks.toml
-
 [start]
-cmd = "gunicorn app:app"
+cmd = "gunicorn app1:app1"
 
 [[build.packs]]
 name = "python"
 
-apt-get update && apt-get install -y libgl1-mesa-glx
-gunicorn -w 4 -b 0.0.0.0:8080 app:app
+[[build.apt_packages]]
+packages = ["libgl1-mesa-glx"]
